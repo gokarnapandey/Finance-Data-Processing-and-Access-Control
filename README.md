@@ -17,7 +17,7 @@ This project is not a basic CRUD implementation. It is designed as a <b>secure, 
     <b>JWT-Based Authentication:</b> Implemented stateless authentication using JSON Web Tokens, eliminating server-side session storage and improving scalability.
   </li>
   <li>
-    <b>Role-Based Access Control (RBAC):</b> Enforced strict authorization using <code>@PreAuthorize</code> with clearly defined roles such as <b>ADMIN</b> and <b>ANALYST</b>.
+    <b>Role-Based Access Control (RBAC):</b> Enforced strict authorization with clearly defined roles such as <b>ADMIN</b>, <b>ANALYST</b> and <b>VIEWER</b>.
   </li>
   <li>
     <b>Credential Security:</b> Passwords are securely hashed using <b>BCrypt</b>. Sensitive identifiers like email are immutable to prevent identity tampering.
