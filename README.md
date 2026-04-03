@@ -158,6 +158,65 @@ Authorization: Bearer &lt;your_token_here&gt;
 </pre>
 
 <hr/>
+<h2>📘 API Documentation (Swagger UI)</h2>
+
+<p>
+This project includes interactive API documentation using <b>Swagger (OpenAPI 3)</b>.
+It allows you to explore and test all endpoints directly from the browser.
+</p>
+
+<hr/>
+
+<h3>🔗 Access Swagger UI</h3>
+
+<p>
+Once the application is running, open:
+</p>
+
+<pre>
+http://localhost:8080/swagger-ui/index.html
+</pre>
+
+<hr/>
+
+<h3>🚀 How to Use Swagger</h3>
+
+<ol>
+  <li>Open the Swagger UI link</li>
+  <li>Locate the <b>/login</b> endpoint</li>
+  <li>Enter default admin credentials:</li>
+</ol>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Field</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>Username</td>
+    <td><code>system@admin.com</code></td>
+  </tr>
+  <tr>
+    <td>Password</td>
+    <td><code>Admin@12345</code></td>
+  </tr>
+</table>
+
+<ol start="4">
+  <li>Execute the request to receive a <b>JWT Token</b></li>
+  <li>Click the <b>"Authorize"</b> button (top right)</li>
+  <li>Enter:</li>
+</ol>
+
+<pre>
+Bearer &lt;your_token_here&gt;
+</pre>
+
+<ol start="7">
+  <li>Now you can access all secured APIs</li>
+</ol>
+
+<hr/>
 
 <h3>⚠️ Important Notes</h3>
 
