@@ -177,8 +177,6 @@ Once the application is running, open:
 http://localhost:8080/swagger-ui/index.html
 </pre>
 
-<hr/>
-
 <h3>🚀 How to Use Swagger</h3>
 
 <ol>
