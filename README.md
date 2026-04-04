@@ -214,6 +214,90 @@ Bearer &lt;your_token_here&gt;
   <li>Now you can access all secured APIs</li>
 </ol>
 
+
+
+<hr/>
+
+<h2>🧪 Unit Testing & Code Reliability</h2>
+
+<p>
+The project includes comprehensive <b>unit tests for the Service Layer</b> to ensure correctness of business logic,
+security rules, and data integrity without relying on external systems like the database.
+</p>
+
+<hr/>
+
+<h3>📌 Testing Strategy</h3>
+
+<ul>
+  <li><b>Layer Tested:</b> Service Implementation Layer</li>
+  <li><b>Testing Framework:</b> JUnit 5</li>
+  <li><b>Mocking Framework:</b> Mockito</li>
+  <li><b>Approach:</b> Isolated unit testing (no Spring context, no DB dependency)</li>
+</ul>
+
+<hr/>
+
+<h3>✔ Test Coverage Focus</h3>
+
+<ul>
+  <li><b>User Management:</b>
+    <ul>
+      <li>User creation validation</li>
+      <li>Duplicate email/mobile handling</li>
+      <li>Role-based restrictions</li>
+      <li>Status update logic</li>
+    </ul>
+  </li>
+
+  <li><b>Financial Records:</b>
+    <ul>
+      <li>Record creation and updates</li>
+      <li>Filtering and pagination logic</li>
+      <li>Category-based operations</li>
+    </ul>
+  </li>
+
+  <li><b>Security Logic:</b>
+    <ul>
+      <li>Authorization checks (ADMIN vs others)</li>
+      <li>Immutable field protection (email)</li>
+    </ul>
+  </li>
+</ul>
+
+<hr/>
+
+<h3>⚙️ Key Testing Practices</h3>
+
+<ul>
+  <li>Repository layer is <b>mocked</b> to isolate business logic</li>
+  <li>Edge cases and exception scenarios are explicitly tested</li>
+  <li>No dependency on database → <b>fast and deterministic tests</b></li>
+</ul>
+
+<hr/>
+
+<h3>▶️ Running Tests</h3>
+
+<pre>
+mvn test
+</pre>
+
+<p>
+All unit tests execute independently and validate service-level behavior without requiring application startup.
+</p>
+
+<hr/>
+
+<h3>⚠️ Design Considerations</h3>
+
+<ul>
+  <li>Unit tests focus on logic, not integration</li>
+  <li>Security annotations (@PreAuthorize) are not directly tested → should be covered in integration tests</li>
+  <li>Future improvement: Add <b>integration tests</b> using @SpringBootTest</li>
+</ul>
+
 <hr/>
 
 <h3>⚠️ Important Notes</h3>
