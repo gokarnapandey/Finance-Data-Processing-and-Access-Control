@@ -5,6 +5,7 @@ import com.zorvyn.assignment.FinancialRecordManagement.dto.DashboardResponseDTO;
 import com.zorvyn.assignment.FinancialRecordManagement.dto.RecentRecordDTO;
 import com.zorvyn.assignment.FinancialRecordManagement.service.DashBoardService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/dashboard")
+@SecurityRequirement(name = "bearerAuth")
 @RequiredArgsConstructor
 @Tag(
         name = "Dashboard & Analytics",

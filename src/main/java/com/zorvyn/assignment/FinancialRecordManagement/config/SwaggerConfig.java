@@ -29,7 +29,7 @@ public class SwaggerConfig {
                         new Server().url("http://localhost:8080").description("Local Development Server")
                 ))
 
-                .addSecurityItem(new SecurityRequirement().addList(SECURITY_SCHEME_NAME))
+//                .addSecurityItem(new SecurityRequirement().addList(SECURITY_SCHEME_NAME))
 
                 .components(new Components()
                         .addSecuritySchemes(SECURITY_SCHEME_NAME, securityScheme()))

@@ -28,7 +28,8 @@ public class AuthController {
     @Operation(
             summary = "User Login",
             description = "Authenticates user credentials and returns a JWT (JSON Web Token). " +
-                    "The resulting token must be used in the 'Authorization' header as a 'Bearer' token for all protected requests."
+                    "The resulting token must be used in the 'Authorization' header as a 'Bearer' token for all protected requests.",
+            security = {}
     )
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDto loginRequest) {

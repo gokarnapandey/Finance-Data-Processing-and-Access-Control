@@ -9,6 +9,7 @@ import com.zorvyn.assignment.FinancialRecordManagement.dto.PaginatedResponseDTO;
 import com.zorvyn.assignment.FinancialRecordManagement.service.FinancialRecordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/v1/records")
+@SecurityRequirement(name = "bearerAuth")
 @RequiredArgsConstructor
 @Tag(
         name = "Financial Record Management",

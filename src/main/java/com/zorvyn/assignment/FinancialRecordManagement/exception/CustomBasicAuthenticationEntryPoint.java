@@ -21,7 +21,7 @@ public class CustomBasicAuthenticationEntryPoint implements AuthenticationEntryP
 
         String message = (authException != null && authException.getMessage() != null) ? authException.getMessage() : "Unauthorized";
 
-        String path = request.getRequestURI();
+        String path = request.getServletPath();
 
         response.setHeader("zorvyn-assessment-error-response", "Authentication Failed");
 

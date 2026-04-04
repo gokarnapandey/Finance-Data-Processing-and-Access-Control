@@ -6,6 +6,7 @@ import com.zorvyn.assignment.FinancialRecordManagement.dto.UserUpdateRequestDTO;
 import com.zorvyn.assignment.FinancialRecordManagement.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 @Tag(
         name = "User Management (Admin Only)",
         description = "Restricted endpoints for administrative user control. " +
