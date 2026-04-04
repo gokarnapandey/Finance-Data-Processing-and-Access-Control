@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class FinancialRecordMapper {
 
     // Request DTO → Entity
-    public static FinancialRecord toEntity(FinancialRecordRequestDTO dto) {
+    public FinancialRecord toEntity(FinancialRecordRequestDTO dto) {
         if (null == dto) {
             throw new BadRequestException("Financial record request data is missing.");
         }
@@ -26,7 +26,7 @@ public class FinancialRecordMapper {
     }
 
     // Entity → Response DTO
-    public static FinancialRecordResponseDTO toDTO(FinancialRecord record) {
+    public FinancialRecordResponseDTO toDTO(FinancialRecord record) {
         if (null == record) return null;
 
         FinancialRecordResponseDTO dto = new FinancialRecordResponseDTO();
@@ -45,8 +45,7 @@ public class FinancialRecordMapper {
         return dto;
     }
 
-    public static void updateEntity(FinancialRecord record, FinancialRecordRequestDTO dto) {
-        // FIXED: Changed != to == so it doesn't throw when data IS present
+    public void updateEntity(FinancialRecord record, FinancialRecordRequestDTO dto) {
         if (dto == null) {
             throw new BadRequestException("Update request data is missing.");
         }

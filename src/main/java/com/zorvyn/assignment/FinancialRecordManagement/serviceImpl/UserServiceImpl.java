@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-//    @PreAuthorize("hasAuthority('ADMIN')")
     public UserResponseDTO createUser(UserRequestDTO request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new ResourceAlreadyExistException("User with this email already exists");
@@ -50,7 +49,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (null == user.getStatus()) {
-            user.setStatus(true); // setting the status active by default
+            user.setStatus(true);
         }
         if(null == user.getIsDeleted()){
             user.setIsDeleted(false);

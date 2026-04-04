@@ -36,13 +36,13 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
     @Transactional
     public FinancialRecordResponseDTO createRecord(FinancialRecordRequestDTO request) {
 
-        FinancialRecord record = FinancialRecordMapper.toEntity(request);
+        FinancialRecord record = financialRecordMapper.toEntity(request);
 
         record.setFinancialRecordId(UUID.randomUUID().toString());
         record.setUserId("current-user-uuid");
         FinancialRecord savedRecord = financialRecordRepository.save(record);
 
-        return FinancialRecordMapper.toDTO(savedRecord);
+        return financialRecordMapper.toDTO(savedRecord);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
             throw new ResourceNotFoundException("This record has been deleted from the system.");
         }
 
-        return FinancialRecordMapper.toDTO(record);
+        return financialRecordMapper.toDTO(record);
     }
 
 
@@ -67,7 +67,7 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
         Page<FinancialRecord> recordPage = financialRecordRepository.findAllByIsDeletedFalse(pageable);
 
         List<FinancialRecordResponseDTO> dtoList = recordPage.getContent().stream()
-                .map(FinancialRecordMapper::toDTO)
+                .map(financialRecordMapper::toDTO)
                 .toList();
 
         return new PaginatedResponseDTO<>(
@@ -93,7 +93,7 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
                 category, type, startDate, endDate, pageable);
 
         List<FinancialRecordResponseDTO> dtoList = recordPage.getContent().stream()
-                .map(FinancialRecordMapper::toDTO)
+                .map(financialRecordMapper::toDTO)
                 .toList();
 
         return new PaginatedResponseDTO<>(

@@ -1,9 +1,7 @@
 package com.zorvyn.assignment.FinancialRecordManagement;
 
 import com.zorvyn.assignment.FinancialRecordManagement.constants.Role;
-import com.zorvyn.assignment.FinancialRecordManagement.dto.UserRequestDTO;
 import com.zorvyn.assignment.FinancialRecordManagement.entities.User;
-import com.zorvyn.assignment.FinancialRecordManagement.mapper.UserMapper;
 import com.zorvyn.assignment.FinancialRecordManagement.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.sql.SQLOutput;
 import java.util.UUID;
 
 
