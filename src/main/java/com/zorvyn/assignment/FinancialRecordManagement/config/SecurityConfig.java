@@ -4,6 +4,7 @@ import com.zorvyn.assignment.FinancialRecordManagement.exception.CustomAccessDen
 import com.zorvyn.assignment.FinancialRecordManagement.exception.CustomBasicAuthenticationEntryPoint;
 import com.zorvyn.assignment.FinancialRecordManagement.filter.JWTTokenGeneratorFilter;
 import com.zorvyn.assignment.FinancialRecordManagement.filter.JWTTokenValidatorFilter;
+import com.zorvyn.assignment.FinancialRecordManagement.rateLimit.RateLimitFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,7 +21,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class SecurityConfig {
 
     @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception{
+    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, RateLimitFilter rateLimitFilter) throws Exception{
 
         http.sessionManagement(
                 smc -> smc.sessionCreationPolicy(
@@ -28,6 +29,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(rateLimitFilter, JWTTokenValidatorFilter.class)
+
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/login").permitAll()
