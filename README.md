@@ -300,6 +300,201 @@ All unit tests execute independently and validate service-level behavior without
 
 <hr/>
 
+<hr/>
+
+<h2>🚦 Rate Limiting (Traffic Control Layer)</h2>
+
+<p>
+This system includes a <b>custom in-memory Token Bucket Rate Limiter</b> integrated into the 
+<b>Spring Security filter chain</b>. It acts as a <b>pre-controller gatekeeper</b> to ensure controlled 
+and fair API usage.
+</p>
+
+<hr/>
+
+<h3>🧠 Architecture Components</h3>
+
+<ul>
+  <li>
+    <b>Token Bucket Engine (Bucket):</b>
+    <ul>
+      <li>Manages request allowance using tokens</li>
+      <li>Supports burst traffic with controlled refill</li>
+      <li>Uses nanosecond precision for accurate timing</li>
+      <li>Thread-safe using synchronized methods</li>
+    </ul>
+  </li>
+
+  <li>
+    <b>Key Resolver:</b>
+    <ul>
+      <li>Identifies user using <code>username/IP + endpoint</code></li>
+      <li>Enables per-user and per-endpoint rate limiting</li>
+    </ul>
+  </li>
+
+  <li>
+    <b>Rate Limiter Service:</b>
+    <ul>
+      <li>Uses <code>ConcurrentHashMap&lt;key, Bucket&gt;</code></li>
+      <li>Creates and manages buckets dynamically</li>
+    </ul>
+  </li>
+
+  <li>
+    <b>Rate Limit Filter:</b>
+    <ul>
+      <li>Intercepts requests after authentication</li>
+      <li>Blocks excessive traffic before reaching controller</li>
+    </ul>
+  </li>
+</ul>
+
+<hr/>
+
+<h3>⚙️ Rate Limiting Strategy</h3>
+
+<p><b>Configuration:</b></p>
+
+<pre>
+Capacity (MAX_TOKENS): 5
+Refill: 5 tokens every 10 seconds
+</pre>
+
+<hr/>
+
+<h3>🔄 How It Works</h3>
+
+<ol>
+  <li>Request arrives at server</li>
+  <li>User is identified (JWT username or IP fallback)</li>
+  <li>Bucket is retrieved or created</li>
+  <li>Refill logic calculates elapsed time</li>
+  <li>Token is consumed</li>
+  <li>If token exists → request allowed</li>
+  <li>If no token → request rejected</li>
+</ol>
+
+<hr/>
+
+<h3>📊 Behavior Summary</h3>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Scenario</th>
+    <th>System Behavior</th>
+  </tr>
+  <tr>
+    <td>First 5 Requests</td>
+    <td>HTTP 200 OK</td>
+  </tr>
+  <tr>
+    <td>6th Request (within 10s)</td>
+    <td>HTTP 429 Too Many Requests</td>
+  </tr>
+  <tr>
+    <td>After 10 seconds</td>
+    <td>Request allowed (tokens refilled)</td>
+  </tr>
+</table>
+
+<hr/>
+
+<h3>📉 Important Characteristics</h3>
+
+<ul>
+  <li>Supports burst traffic (up to 5 immediate requests)</li>
+  <li>Refill happens every 10 seconds</li>
+  <li>Thread-safe implementation</li>
+</ul>
+
+<hr/>
+
+<h3>⚠️ Limitations</h3>
+
+<ul>
+  <li>Not a strict sliding window (burst allowed after refill)</li>
+  <li>In-memory storage (not suitable for distributed systems)</li>
+  <li>No automatic eviction (potential memory growth)</li>
+</ul>
+
+<hr/>
+
+<h3>🔐 Security Benefits</h3>
+
+<ul>
+  <li>Prevents brute force attacks</li>
+  <li>Reduces risk of Denial of Service (DoS)</li>
+  <li>Ensures fair resource usage</li>
+  <li>Protects backend from excessive traffic</li>
+</ul>
+
+<hr/>
+
+<h3>🧪 Example Scenarios</h3>
+
+<p><b>Normal Usage:</b></p>
+<pre>
+User sends 5 requests → All succeed
+</pre>
+
+<p><b>Rate Limit Exceeded:</b></p>
+<pre>
+6th request within 10 seconds → HTTP 429
+</pre>
+
+<p><b>After Cooldown:</b></p>
+<pre>
+Wait 10 seconds → Requests allowed again
+</pre>
+
+<hr/>
+
+<h3>⚠️ Design Trade-offs</h3>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Aspect</th>
+    <th>Decision</th>
+    <th>Impact</th>
+  </tr>
+  <tr>
+    <td>Storage</td>
+    <td>In-memory</td>
+    <td>Fast but not scalable</td>
+  </tr>
+  <tr>
+    <td>Algorithm</td>
+    <td>Token Bucket</td>
+    <td>Allows burst traffic</td>
+  </tr>
+  <tr>
+    <td>Placement</td>
+    <td>Security Filter</td>
+    <td>Efficient early rejection</td>
+  </tr>
+</table>
+
+<hr/>
+
+<h3>🚀 Future Improvements</h3>
+
+<ul>
+  <li>Use Redis for distributed rate limiting</li>
+  <li>Implement Sliding Window for strict limits</li>
+  <li>Add cache eviction (Caffeine)</li>
+  <li>Move to API Gateway level (NGINX / Spring Cloud Gateway)</li>
+</ul>
+
+<hr/>
+
+<h3>📌 Key Takeaway</h3>
+
+<p>
+This implementation demonstrates a shift from <b>basic request handling</b> to 
+<b>production-grade traffic control</b>, improving system stability, security, and scalability.
+</p>
+
 <h3>⚠️ Important Notes</h3>
 
 <ul>
