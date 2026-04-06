@@ -308,8 +308,6 @@ This system includes a <b>custom in-memory Token Bucket Rate Limiter</b> integra
 and fair API usage.
 </p>
 
-<hr/>
-
 <h3>🧠 Architecture Components</h3>
 
 <ul>
@@ -348,7 +346,6 @@ and fair API usage.
   </li>
 </ul>
 
-<hr/>
 
 <h3>⚙️ Rate Limiting Strategy</h3>
 
@@ -358,8 +355,6 @@ and fair API usage.
 Capacity (MAX_TOKENS): 5
 Refill: 5 tokens every 10 seconds
 </pre>
-
-<hr/>
 
 <h3>🔄 How It Works</h3>
 
@@ -372,8 +367,6 @@ Refill: 5 tokens every 10 seconds
   <li>If token exists → request allowed</li>
   <li>If no token → request rejected</li>
 </ol>
-
-<hr/>
 
 <h3>📊 Behavior Summary</h3>
 
@@ -396,8 +389,6 @@ Refill: 5 tokens every 10 seconds
   </tr>
 </table>
 
-<hr/>
-
 <h3>📉 Important Characteristics</h3>
 
 <ul>
@@ -406,7 +397,6 @@ Refill: 5 tokens every 10 seconds
   <li>Thread-safe implementation</li>
 </ul>
 
-<hr/>
 
 <h3>⚠️ Limitations</h3>
 
@@ -416,8 +406,6 @@ Refill: 5 tokens every 10 seconds
   <li>No automatic eviction (potential memory growth)</li>
 </ul>
 
-<hr/>
-
 <h3>🔐 Security Benefits</h3>
 
 <ul>
@@ -426,8 +414,6 @@ Refill: 5 tokens every 10 seconds
   <li>Ensures fair resource usage</li>
   <li>Protects backend from excessive traffic</li>
 </ul>
-
-<hr/>
 
 <h3>🧪 Example Scenarios</h3>
 
@@ -445,8 +431,6 @@ User sends 5 requests → All succeed
 <pre>
 Wait 10 seconds → Requests allowed again
 </pre>
-
-<hr/>
 
 <h3>⚠️ Design Trade-offs</h3>
 
@@ -473,8 +457,6 @@ Wait 10 seconds → Requests allowed again
   </tr>
 </table>
 
-<hr/>
-
 <h3>🚀 Future Improvements</h3>
 
 <ul>
@@ -483,8 +465,6 @@ Wait 10 seconds → Requests allowed again
   <li>Add cache eviction (Caffeine)</li>
   <li>Move to API Gateway level (NGINX / Spring Cloud Gateway)</li>
 </ul>
-
-<hr/>
 
 <h3>📌 Key Takeaway</h3>
 
