@@ -300,8 +300,6 @@ All unit tests execute independently and validate service-level behavior without
 
 <hr/>
 
-<hr/>
-
 <h2>🚦 Rate Limiting (Traffic Control Layer)</h2>
 
 <p>
