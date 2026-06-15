@@ -3,6 +3,9 @@
 <p>
 A high-performance, enterprise-grade REST API for tracking and analyzing financial data.
 Built with Spring Boot 3.x focusing on scalability, security, and clean architecture.
+It also ships with an optional <b>AI Assistant</b> — a Spring AI + Ollama chatbot that lets you
+query and manage your finances in natural language with role-based tool calling
+(see the <code>finance-chatbot/</code> module).
 </p>
 
 <section>
@@ -37,6 +40,43 @@ Built with Spring Boot 3.x focusing on scalability, security, and clean architec
     <li>Category-based aggregation</li>
     <li>Soft delete using <code>isDeleted</code></li>
   </ul>
+</section>
+
+<section>
+  <h2>🤖 AI Assistant (Spring AI Chatbot)</h2>
+  <p>
+    A companion service in the <code>finance-chatbot/</code> module turns this API into a
+    conversational assistant. It uses <b>Spring AI</b> with a local <b>Ollama</b> LLM and
+    <b>tool calling</b> — the model invokes typed Java tools that wrap these REST endpoints,
+    so you can ask for data or perform actions in plain English.
+  </p>
+  <ul>
+    <li><b>Role-Based Tool Access:</b> the tools exposed to the model are filtered by the caller's role</li>
+    <li><b>Defense in Depth:</b> the user's JWT is forwarded on every tool call, so this API re-enforces RBAC</li>
+    <li><b>Multi-turn Memory:</b> conversations retain context per user/session</li>
+    <li><b>Local & Private:</b> runs entirely on Ollama — no API keys, no data leaves the machine</li>
+  </ul>
+
+  <h3>Role → Capabilities</h3>
+  <table>
+    <tr><th>Role</th><th>What the assistant can do</th></tr>
+    <tr><td><b>VIEWER</b></td><td>Dashboard & analytics queries (summary, category totals, trends, recent)</td></tr>
+    <tr><td><b>ANALYST</b></td><td>VIEWER + read and search financial records</td></tr>
+    <tr><td><b>ADMIN</b></td><td>ANALYST + create / update / delete records and full user management</td></tr>
+  </table>
+
+  <h3>Run</h3>
+  <pre><code>ollama pull qwen3:4b        # tool-capable local model
+cd finance-chatbot
+mvn spring-boot:run          # chatbot on :8081 ; this API on :8080</code></pre>
+
+  <h3>Chat</h3>
+  <pre><code>POST http://localhost:8081/api/v1/chat
+Authorization: Bearer &lt;token&gt;
+
+{ "message": "What is my total income versus expense?" }</code></pre>
+
+  <p>Full setup, configuration, and architecture: see <code>finance-chatbot/README.md</code>.</p>
 </section>
 
 <section>
@@ -166,5 +206,6 @@ Refill: 5 tokens / 10 sec
     <li>JWT required for all APIs</li>
     <li>Stateless authentication</li>
     <li>H2 data resets on restart</li>
+    <li>Optional AI Assistant lives in <code>finance-chatbot/</code> (Spring AI + Ollama)</li>
   </ul>
 </section>
