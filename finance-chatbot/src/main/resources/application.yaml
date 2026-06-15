@@ -1,0 +1,33 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: finance-chatbot
+  ai:
+    ollama:
+      base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+      chat:
+        options:
+          model: ${OLLAMA_MODEL:qwen3:4b}     # tool-capable model; qwen2.5 / llama3.1:8b are alternatives
+          temperature: 0.1                     # low temperature -> reliable tool selection
+      init:
+        pull-model-strategy: when_missing       # auto-pull the model on first boot if absent
+        timeout: 10m
+        max-retries: 1
+
+# Downstream Finance Record Management API
+finance:
+  api:
+    base-url: ${FINANCE_API_BASE_URL:http://localhost:8080}
+
+# JWT secret MUST equal the Finance app's JWT_SECRET so the same tokens validate.
+# Default mirrors the Finance app's SecurityConstants default for out-of-the-box demos.
+security:
+  jwt:
+    secret: ${JWT_SECRET:hgiguidgjhbdsjb9y873223jhbjbjb#@##}
+
+logging:
+  level:
+    org.springframework.ai: INFO
+    com.zorvyn.assignment.financechatbot: DEBUG
